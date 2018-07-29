@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>kn-sim</groupId>
+    <artifactId>test-sim</artifactId>
+    <version>1.0</version>
+  </parent>
+	<artifactId>api-mock</artifactId>
+	<packaging>war</packaging>
+	<name>api-mock</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Please dont raise the jetty version, the wiremock wont work beyond this version
+        as it is the only way for the wiremock to support java7. 9.2.22.v20170606 jetty-9.4.8.v20171121-->
+		<jetty-version>9.2.22.v20170606</jetty-version>
+        <wiremock-version>2.16.0</wiremock-version>
+        <maven.war.version>3.2.0</maven.war.version>
+        
+	</properties>
+    <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-runner -->
+    
+
+	<build>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty-version}</version>
+                <configuration>
+                    <webAppConfig>
+                        <contextPath></contextPath>
+                    </webAppConfig>
+                    <webAppSourceDirectory>target/${project.artifactId}-${project.version}</webAppSourceDirectory>
+                    <stopPort>8079</stopPort>
+                    <stopKey>stopit</stopKey>
+                    <stopWait>10</stopWait>
+                    <httpConnector>
+                        <port>7357</port>
+                        <idleTimeout>60000</idleTimeout>
+                    </httpConnector>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>start-jetty</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <scanIntervalSeconds>0</scanIntervalSeconds>
+                            <daemon>true</daemon>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-jetty</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+            		<groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-war-plugin</artifactId>
+	            <version>${maven.war.version}</version>
+	        </plugin>
+        </plugins>
+    </build>
+    
+    <dependencies>
+       <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-standalone</artifactId>
+            <version>${wiremock-version}</version>
+        </dependency>    
+    </dependencies>
+</project>

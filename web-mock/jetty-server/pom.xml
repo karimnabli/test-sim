@@ -1,0 +1,155 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>jetty-server</artifactId>
+	<parent>
+		<groupId>kn-sim</groupId>
+		<artifactId>test-sim</artifactId>
+		<version>1.0</version>
+	</parent>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.8</jdk.version>
+		<maven.compiler.version>3.7.0</maven.compiler.version>
+		<maven.assembly.version>3.1.0</maven.assembly.version>
+		<jetty.version>9.4.9.v20180320</jetty.version>
+		<mock.version>1.0</mock.version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<plugin.maven-jar-plugin.version>3.1.0</plugin.maven-jar-plugin.version>
+		<exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+		<maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
+		<appassembler-maven-plugin.version>2.0.0</appassembler-maven-plugin.version>
+		<maven-resources-plugin.verison>3.0.2</maven-resources-plugin.verison>
+	</properties>
+	<name>data-capture-sim</name>
+	<dependencies>
+		<dependency>
+	        <groupId>org.eclipse.jetty</groupId>
+	        <artifactId>jetty-runner</artifactId>
+	        <version>${jetty.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.eclipse.jetty</groupId>
+	        <artifactId>jetty-jmx</artifactId>
+	        <version>${jetty.version}</version> 
+	    </dependency>
+	</dependencies>
+	<build>
+		<finalName>data-capture-sim</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.version}</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+               <!--  Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${plugin.maven-jar-plugin.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>org.kn.qa.sim.JettyServer</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+		<plugin>
+		    <artifactId>maven-resources-plugin</artifactId>
+		    <version>${maven-resources-plugin.verison}</version>
+		    <executions>
+		        <execution>
+		            <id>copy-war</id>
+		            <phase>generate-resources</phase>
+		            <goals>
+		                <goal>copy-resources</goal>
+		            </goals>
+		            <configuration>
+		                <outputDirectory>${project.basedir}/src/main/config</outputDirectory>
+		                <overwrite>true</overwrite>
+		                <resources>
+		                    <resource>
+		                        <directory>../web-mock/target</directory>
+		                        <includes>
+		                            <include>web-mock-1.0.war</include>
+		                        </includes>
+		                    </resource>
+		                     <resource>
+		                        <directory>../api-mock/target</directory>
+		                        <includes>
+		                            <include>api-mock-1.0.war</include>
+		                        </includes>
+		                    </resource>
+		                </resources>
+		            </configuration>
+		        </execution>
+		    </executions>
+		</plugin>
+		</plugins>
+	</build>
+<profiles>
+<profile>
+            <id>assembly</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                  <!--   Generate both Windows and Linux bash shell execution scripts -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>appassembler-maven-plugin</artifactId>
+                        <version>${appassembler-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>assemble</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <repositoryLayout>flat</repositoryLayout>
+                            <useWildcardClassPath>true</useWildcardClassPath>
+                           <!--  Set the target configuration directory to be used in the bin scripts -->
+                            <configurationDirectory>conf</configurationDirectory>
+                 <!--            Copy the contents from "/src/main/config" to the target
+                                 configuration directory in the assembled application -->
+                            <copyConfigurationDirectory>true</copyConfigurationDirectory>
+                       <!--      Include the target configuration directory in the beginning of
+                                 the classpath declaration in the bin scripts -->
+                            <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
+                       <!--      Extra JVM arguments that will be included in the bin scripts -->
+                            <extraJvmArguments>-Xmx1024m</extraJvmArguments>
+                            <programs>
+                                <program>
+                                    <id>start</id>
+                                    <mainClass>org.kn.qa.sim.JettyServer</mainClass>
+                                    <name>start</name>
+                                </program>
+                                <program>
+                                    <id>stop</id>
+                                    <mainClass>org.kn.qa.sim.Stop</mainClass>
+                                    <name>stop</name>
+                                </program>
+                            </programs>
+                            <binFileExtensions>
+                                <unix>.sh</unix>
+                            </binFileExtensions>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>  
+</project>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SanityLivePage</title>
+
+  <style>
+    body {
+      padding: 20px;
+      font-family: sans-serif;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      list-style-type: none;
+      color: #404040;
+    }
+  </style>
+
+  <script src="./test-events.js" type="text/javascript"></script>
+<script>
+function get () {
+    var form = document.createElement('form');
+    form.setAttribute('method', 'get');
+    form.setAttribute('action', 'http://127.0.0.1:7357/mock/myget');
+    form.style.display = 'hidden';
+    document.body.appendChild(form)
+    form.submit();
+}
+</script>
+<script>
+function post () {
+    var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', 'http://127.0.0.1:7357/mock/mypost');
+    form.style.display = 'hidden';
+    document.body.appendChild(form)
+    form.submit();
+}
+</script>
+
+</head>
+
+<body>
+  <button type="button" onclick="post();">POST</button>
+  <br/>
+  <br/>
+  <button type="button" onclick="get();">GET</button>
+  <br/>
+  <br/>
+  <a href="#af25c" id="b17b9">A Link</a>
+  <br />
+  <br />
+  <Button id="51b2e">Im a button</Button>
+  <br />
+  <br />
+  <select>
+    <option>Doritos</option>
+    <option>Hunky Doreys</option>
+    <option>Tayto</option>
+    <option>Cheese Puffs</option>
+    <option>Meanies</option>
+  </select>
+  <br />
+	<form>
+			<fieldset>
+				<legend>KN</legend>
+				<label><b>Enter a Message</b></label> <input type="text" placeholder="text field" 
+					name="message" id="ced8f7">
+			</fieldset>
+		</form>
+	<br/>
+	<div class="form_page_container">
+			<h3>Without Form element</h3>
+			<div class="radio-group">
+				<input type="radio" name="alpha" id="d8f7b" value="abc">
+				ABC
+				<input type="radio" name="alpha" value="def">
+				DEF
+				<input type="radio" name="alpha" value="ghi">
+				GHI
+				<input type="radio" value="jkl">
+				 JKL
+			</div>
+		</div>
+		<br>
+  <div style="margin-top: 20px; text-align: left; background-color: 	#FAEBD7; padding: 20px;font-family: courier;font-weight: bold;">
+    <ul id="report"></ul>
+  </div>
+  
+
+	
+</body>
+
+</html>

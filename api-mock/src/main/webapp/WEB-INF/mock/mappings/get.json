@@ -1,0 +1,13 @@
+{        
+    "request": {                                    
+        "method": "GET",                        
+        "urlPath": "/myget"
+    },                                      
+    "response": {                                   
+        "status": 200,                          
+        "bodyFileName": "get.json",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }                                               
+}
