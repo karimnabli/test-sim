@@ -1,19 +1,32 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+  <parent>
     <groupId>kn-sim</groupId>
     <artifactId>test-sim</artifactId>
     <version>1.0</version>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>api-mock</module>
-        <module>web-mock</module>
-        <module>jetty-server</module> 
-    </modules>
+  </parent>
+    <artifactId>web-mock</artifactId>
+    <packaging>war</packaging>
+    <name>web-mock</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Please dont raise the jetty version, the wiremock wont work beyond this version
+        as it is the only way for the wiremock to support java7. -->
+        <wiremock-version>2.16.0</wiremock-version>
+        <maven.war.version>3.2.0</maven.war.version>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven.war.version}</version>
+                <configuration>
+                		<webXml>src/main/webapp/web.xml</webXml>   
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

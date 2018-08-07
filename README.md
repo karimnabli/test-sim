@@ -46,7 +46,7 @@ The __files contain the stub response. these response are static. for dynamic re
 $ mvn clean install
 $ mvn jetty:run
 ```
-You can check if all working fine, go to (http://localhost:7357/api/config)[http://localhost:7357/api/config]
+You can check if all working fine, go to (http://localhost:8885/api/config)[http://localhost:8885/api/config]
 
 ## Web mock
 ### Getting started
@@ -78,7 +78,7 @@ $ mvn clean install
 once the api-mock-[x.y].war and web-mock-[x.y].war are generated run the following 
 
 ```shell
-$ java -jar jetty-runner-9.4.9.v20180320.jar --port 7357 --path / web-mock-0.1.war --path /mock api-mock-0.1.war
+$ java -jar jetty-runner-9.4.9.v20180320.jar --port 8885 --path / web-mock-0.1.war --path /mock api-mock-0.1.war
 ```
 
 the static pages should be deployed under "/" and the api mock is deployed under "/mock" path. 

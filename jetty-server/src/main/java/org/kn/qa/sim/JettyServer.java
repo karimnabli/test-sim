@@ -78,7 +78,7 @@ public class JettyServer {
 			LOGGER.info("Server: handels contexts");
 			server.setHandler(contexts);
 			// Start things up!
-			LOGGER.info("Server Started on http://localhost:7357");
+			LOGGER.info("Server Started on http://localhost:8885");
 			server.start();
 			server.dumpStdErr();
 			Monitor monitor = new Monitor(STOP_PORT, new Server[] { server });

@@ -29,7 +29,7 @@
 function get () {
     var form = document.createElement('form');
     form.setAttribute('method', 'get');
-    form.setAttribute('action', 'http://127.0.0.1:7357/mock/myget');
+    form.setAttribute('action', 'http://127.0.0.1:8885/mock/myget');
     form.style.display = 'hidden';
     document.body.appendChild(form)
     form.submit();
@@ -39,7 +39,7 @@ function get () {
 function post () {
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', 'http://127.0.0.1:7357/mock/mypost');
+    form.setAttribute('action', 'http://127.0.0.1:8885/mock/mypost');
     form.style.display = 'hidden';
     document.body.appendChild(form)
     form.submit();
